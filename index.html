@@ -10,8 +10,28 @@
 
     <title>Hello, world!</title>
   </head>
+  <style type="text/css">
+    .vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+body {
+  background-color: #F5F5F5;
+}
+  </style>
   <body>
-    <button href="/sbs_09132020_web.pdf" class="btn btn-info">Sermon Notes</button>
+    <div class="container vertical-center" >
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="text-center center" >
+            <a href="sbs_09132020_web.pdf" class="btn btn-lg btn-info">Sermon Resources</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- Popper.js first, then Bootstrap JS -->
