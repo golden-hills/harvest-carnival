@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <script src="https://unpkg.com/stimulus/dist/stimulus.umd.js"></script>
 
     <title>GHCC</title>
   </head>
@@ -53,22 +54,84 @@
       <div class="row" >
         <div class="col-xl-12" >
           <h2 class="text-center center" >
-            <a href="notes.pdf" class="btn btn-lg btn-info ">Sermon Notes</a>
+            <a href="notes.pdf" class="btn btn-lg btn-info " data-controller="prefetch">Sermon Notes</a>
           </h2>
           <h2 class="text-center center" >
-            <a href="notes bw.pdf" class="btn btn-lg btn-info ">Sermon Notes B&W</a>
+            <a href="notes bw.pdf" class="btn btn-lg btn-info " data-controller="prefetch">Sermon Notes B&W</a>
           </h2>
           <h2 class="text-center " >
-            <a href="lyrics.pdf" class="btn btn-lg btn-info">Song Lyrics</a>
+            <a href="lyrics.pdf" class="btn btn-lg btn-info" data-controller="prefetch">Song Lyrics</a>
           </h2>
           <h2 class="text-center " >
-            <a href="bulletin.pdf" class="btn btn-lg btn-info ">Bulletin</a>
+            <a href="bulletin.pdf" class="btn btn-lg btn-info " data-controller="prefetch">Bulletin</a>
           </h2>
           <h2 class="text-center center" >
-            <a href="https://goldenhills.org/online-giving" class="btn btn-lg btn-info ">Give Now</a>
+            <a href="https://goldenhills.org/online-giving" class="btn btn-lg btn-info " data-controller="prefetch">Give Now</a>
           </h2>
         </div>
       </div>
     </div>
   </body>
+  <script>
+    (() => {
+      const application = Stimulus.Application.start()
+
+      application.register("prefetch", class extends Stimulus.Controller {
+        initialize () {
+          this.prefetch = this.prefetch.bind(this)
+          this.load = this.load.bind(this)
+        }
+
+        connect () {
+          if (!this.hasPrefetch) return
+
+          this.load()
+        }
+
+        load () {
+          const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                this.prefetch()
+
+                observer.unobserve(entry.target)
+              }
+            })
+          })
+
+          observer.observe(this.element)
+        }
+
+        prefetch () {
+          const connection = navigator.connection
+
+          if (connection) {
+            // Don't prefetch if using 2G or if Save-Data is enabled.
+            if (connection.saveData) {
+              console.warn('[stimulus-prefetch] Cannot prefetch, Save-Data is enabled.')
+              return
+            }
+
+            if (/2g/.test(connection.effectiveType)) {
+              console.warn('[stimulus-prefetch] Cannot prefetch, network conditions are poor.')
+              return
+            }
+          }
+
+          const link = document.createElement('link')
+          link.rel = 'prefetch'
+          link.href = this.element.href
+          link.as = 'document'
+
+          document.head.appendChild(link)
+        }
+
+        get hasPrefetch () {
+          const link = document.createElement('link')
+
+          return link.relList && link.relList.supports && link.relList.supports('prefetch')
+        }
+      })
+    })()
+  </script>
 </html>
