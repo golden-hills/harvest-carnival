@@ -5,9 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sunday Resources">
-    <head>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <!-- StimulusJS -->
     <script src="https://unpkg.com/stimulus/dist/stimulus.umd.js"></script>
 
     <title>GHCC</title>
@@ -24,8 +25,8 @@
       padding:20px
     }
     .vertical-center {
-      min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-      min-height: 100vh; /* These two lines are counted as one :-)       */
+      min-height: 100%;
+      min-height: 100vh;
       display: flex;
       align-items: center;
     }
@@ -44,31 +45,38 @@
       margin-left: -20px;
     }
     .btn { 
-      min-width: 250px;
+      min-width: 34vh;
+    }
+    .button-container {
+      margin-top: -20vh;
     }
   </style>
 <body>
 <div class="logo">
   <img src="GHCC-Color-Logo.svg" width="75%" alt="Golden Hills Logo" />
 </div>
-    <div class="container vertical-center" style="margin-top: -150px">
+    <div class="container vertical-center button-container" >
       <div class="row" >
         <div class="col-xl-12" >
-          <h2 class="text-center center" >
+
+          <!-- ** Buttons go here ** -->
+          <h2 class="text-center" >
             <a href="notes.pdf" class="btn btn-lg btn-info " data-controller="prefetch">Sermon Notes</a>
           </h2>
-          <h2 class="text-center center" >
+          <h2 class="text-center">
             <a href="notes bw.pdf" class="btn btn-lg btn-info " data-controller="prefetch">Sermon Notes B&W</a>
           </h2>
-          <h2 class="text-center " >
+          <h2 class="text-center">
             <a href="lyrics.pdf" class="btn btn-lg btn-info" data-controller="prefetch">Song Lyrics</a>
           </h2>
-          <h2 class="text-center " >
+          <h2 class="text-center">
             <a href="bulletin.pdf" class="btn btn-lg btn-info " data-controller="prefetch">Bulletin</a>
           </h2>
-          <h2 class="text-center center" >
+          <h2 class="text-center">
             <a href="https://goldenhills.org/online-giving" class="btn btn-lg btn-info " data-controller="prefetch">Give Now</a>
           </h2>
+          <!-- ** Buttons go here ** -->
+
         </div>
       </div>
     </div>
